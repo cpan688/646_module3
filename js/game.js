@@ -12,7 +12,7 @@ const arrStats = [10, 25, 50, 75, 100];
 const arrMoney = ["Gold", "Silver", "Iron", "Bronze", "Seashells", "Copper", "Platinum", "RareEarth"];
 const arrWeapons = ["Staff", "Dagger", "Chain", "Katana", "Axe", "Laser", "PitchFork", "FireBomb", "Rocks", "Sword"];
 const arrClasses = ["Healer", "Warrior", "Thief", "Knight", "Damsel", "Gnome", "Ninja", "Gladiator", "Farmer"];
-const arrPets = ["Cyber Cat", "Dragon Whelp", "Walking Fish", "Jaguar", "Laser Lion", "Cougar"];
+const arrFamiliars = ["Capuchin", "Hawk", "Lynx", "Wolf", "Wyvern"];
 const arrNames = ["Abakor", "Bandala", "Cartin", "Daroame", "Excelsior", "Fezzor", "Gizleeni", "Halor", "Ia", "Jeepenn", "Kalindaa", "Lineuss", "Mordanatara", "Noweakino", "Oinko", "Popeino", "Quantuna", "Rodeo", "Samson", "Tioga", "Utopoh", "Velurfa", "Wonka", "Xanado", "Yolo", "Zandu"];
 
 // Array to keep track of all Emails associated with each Saved game
@@ -21,43 +21,21 @@ let arrEmails = [];
 function fnGenArray(anArray){
     console.log("fnGenArray() is running with " + anArray);
     let tmpNumber = Math.floor(Math.random() * anArray.length);
-
     return anArray[tmpNumber];
 }; // END fnGenArray()
 
-
-// Note: common practice to fully capitalize your names (OCN)
-// Define the meaning of a Main Character, with its various Properties (Keys) and Methods (Commands
-// 10/7: Changed cPet to cStr and added cCluckldjdflkjfdkl & cClass
-function PartyMember(cName, cHP, cStr, cSpd, cMp, cLuck, cWep, cClass){
-    // "Connect" the external (Global Scope) data with the internal (Local Scope) 
-    this.cName  = cName;
-    this.cHP    = cHP;
-    this.cStr   = cStr;
-    this.cSpd   = cSpd;
-    this.cMp    = cMp;
-    this.cLuck  = cLuck;
-    this.cWep   = cWep;
-    this.cClass = cClass;
-    
-    // Add a Method to this Object
-    this.cTotals = function(){
-        let tmpVal = this.cHP + this.cStr + this.cSpd + this.cMp + this.cLuck;
-        return tmpVal;
-    }; // END .cTotals()
-}; // END PartyMember() OCN
 
 function fnCharCreate(){
 console.log("fnCharCreate() is running");
 
 let valinCreateGameName = document.querySelector("#inCreateGameName").value;
 let valinCreateGameEmail = document.querySelector("#inCreateGameEmail").value;
+console.log(valinCreateGameName, valinCreateGameEmail);
 
 if ((valinCreateGameName != null && valinCreateGameName !="") &&
     (valinCreateGameEmail != null && valinCreateGameEmail != "")) 
  
   {
-    console.log(valinCreateGameName, valinCreateGameEmail);
     document.querySelector("#pGameInputWarning").style.display = "none";
 
     // PartyMember(cName, cHP, cStr, cSpd, cMp, cLuck, cWep, cClass)
@@ -127,7 +105,7 @@ if ((valinCreateGameName != null && valinCreateGameName !="") &&
     document.querySelector("#spnCreateGameOutput").innerHTML += "<br>Weapon: " + tmpCompanion02.cWep;
     document.querySelector("#spnCreateGameOutput").innerHTML += "<br>Class: " + tmpCompanion02.cClass;
 
-    // =====================================================================================================
+    //======================================================================================================
         // document.querySelector("#pCreateGameInputs").style.display = "none";
         // document.querySelector("#pCreateGameControls").style.display = "block";
         
@@ -155,7 +133,7 @@ if ((valinCreateGameName != null && valinCreateGameName !="") &&
         // document.querySelector("#spnCreateGameOutput").innerHTML += "<br>Speed: " + tmpCompanion02.cSpeed;
         // document.querySelector("#spnCreateGameOutput").innerHTML += "<br>Weapon: " + tmpCompanion02.cWep;
         // document.querySelector("#spnCreateGameOutput").innerHTML += "<br>Pet: " + tmpCompanion02.cPet;
-
+    //======================================================================================================
 
     // "Join" this Party internally
     let tmpParty = {
@@ -167,7 +145,7 @@ if ((valinCreateGameName != null && valinCreateGameName !="") &&
     }; // END of complete party in JSON
     console.log(tmpParty);
 
-    // SAVE THE PARTY PERMANANTLY VIA localStorage, first, check if anything has been previously saved
+    // SAVE THE PARTY PERMANENTLY VIA localStorage, first, check if anything has been previously saved
     let tmpAllEmails =  JSON.parse(localStorage.getItem("allEmails"));
     if(!tmpAllEmails){
         // True, we have never played the game before, save data for the first time
@@ -178,7 +156,7 @@ if ((valinCreateGameName != null && valinCreateGameName !="") &&
         // Store everything of this Party, based on emails
         localStorage.setItem(tmpParty._id, JSON.stringify(tmpParty));
         console.log("Success: we saved a game for the first time!");
-    }else{
+    } else {
         tmpAllEmails.push(tmpParty._id);
         localStorage.setItem("allEmails", JSON.stringify(tmpAllEmails));
         localStorage.setItem(tmpParty._id, JSON.stringify(tmpParty));
@@ -190,6 +168,34 @@ if ((valinCreateGameName != null && valinCreateGameName !="") &&
     document.querySelector("#pGameInputWarning").style.display = "block";
  }
 }; // END fnCharCreate()
+
+let player01 = {
+    "pName" : "Victor",
+    "pWep" : "Sword", 
+    "pAlive" : true,
+    "pPet" : "Cat"
+}; // END player01 JSON Notation
+
+
+// Define the meaning of a Main Character, with its various Properties (Keys) and Methods (Commands)
+// 10/7: Changed cPet to cStr and added cCluck & cClass
+function PartyMember(cName, cHP, cStr, cSpd, cMp, cLuck, cWep, cClass){
+    // "Connect" the external (Global Scope) data with the internal (Local Scope) 
+    this.cName  = cName;
+    this.cHP    = cHP;
+    this.cStr   = cStr;
+    this.cSpd   = cSpd;
+    this.cMp    = cMp;
+    this.cLuck  = cLuck;
+    this.cWep   = cWep;
+    this.cClass = cClass;
+    
+    // Add a Method to this Object
+    this.cTotals = function(){
+        let tmpVal = this.cHP + this.cStr + this.cSpd + this.cMp + this.cLuck;
+        return tmpVal;
+    }; // END .cTotals()
+}; // END PartyMember() OCN
 
 
 function Vehicle(vType, vSpeedVal, vSpeedUnits, vCapacity){this.vType=vType;};
@@ -247,11 +253,11 @@ function fnNavQuest(pgHide, pgShow, currParty) {
             break;
         case "#pgForest":
             console.log("About to initialize The Forest");
-            fnForest(currParty);
+            // fnForest(currParty);
             break;
         case "#pgLake":
             console.log("About to initialize The Lake");
-            fnLake(currParty);
+            // fnLake(currParty);
             break;
         // TO-DO: Add the other 10 levels; don't forget #
         default: 
@@ -269,48 +275,93 @@ function fnTavern(currParty){
     let myParty = JSON.parse(localStorage.getItem(currParty));
     console.log(myParty);
 
-    document.querySelector("#pTvnMsg").innerHTML = "Welcome travellers! Our Tavern is the oldest in the land. Perhaps try a Game of Strength, Game of Speed, or a Game of Luck? There are many willing participants to challenge!";
+    document.querySelector("#pTvnMsg").innerHTML = "Welcome travelers! Our Tavern is the oldest in the land. Perhaps try a Game of Strength, Game of Speed, or a Game of Luck? There are many willing participants to challenge!";
 
-    // Start showing the data of Main Character. NOTE the =
-    document.querySelector("#pTvnParty").innerHTML = myParty.cMain.cName;
-    // Continue showing the data of the Main Character. NOTE the +=
-    document.querySelector("#pTvnParty").innerHTML += "<br>STR: " + myParty.cMain.cStr;
-    document.querySelector("#pTvnParty").innerHTML += "<br>SPD: " + myParty.cMain.cSpd;
-    document.querySelector("#pTvnParty").innerHTML += "<br>LUK: " + myParty.cMain.cLuck;
+    /*
+        An HTML Table has a parent <table> </table>
+        And every Row is a <tr> </tr>
+        And every Cell (column) is a <td> </td> (Table Data)
+         These won't change, but the in-between content WILL
+    */
+    document.querySelector("#pTvnParty").innerHTML = "<table><tr><td style='padding-right: 0.5em; border-right: 2px solid goldenrod;'>" + 
+            myParty.cMain.cName +
+            "<br>STR: " + myParty.cMain.cStr +
+            "<br>SPD: " + myParty.cMain.cSpd +
+            "<br>LUK: " + myParty.cMain.cLuck +
 
-    // Then show Companion 1 and 2. NOTE +=
-    document.querySelector("#pTvnParty").innerHTML += "<br><br>" + myParty.cComp01.cName;
-    document.querySelector("#pTvnParty").innerHTML += "<br>STR: " + myParty.cComp01.cStr;
-    document.querySelector("#pTvnParty").innerHTML += "<br>SPD: " + myParty.cComp01.cSpd;
-    document.querySelector("#pTvnParty").innerHTML += "<br>LUK: " + myParty.cComp01.cLuck;
+            "</td><td style='padding-right: 0.5em; border-right: 2px solid goldenrod; padding-left: 0.5em;'>" + 
+            myParty.cComp01.cName +
+            "<br>STR: " + myParty.cComp01.cStr +
+            "<br>SPD: " + myParty.cComp01.cSpd +
+            "<br>LUK: " + myParty.cComp01.cLuck +
 
-    document.querySelector("#pTvnParty").innerHTML += "<br><br>" + myParty.cComp02.cName;
-    document.querySelector("#pTvnParty").innerHTML += "<br>STR: " + myParty.cComp02.cStr;
-    document.querySelector("#pTvnParty").innerHTML += "<br>SPD: " + myParty.cComp02.cSpd;
-    document.querySelector("#pTvnParty").innerHTML += "<br>LUK: " + myParty.cComp02.cLuck;
+            "</td><td style='padding-left: 0.5em;'>" + 
+            myParty.cComp02.cName +
+            "<br>STR: " + myParty.cComp02.cStr +
+            "<br>SPD: " + myParty.cComp02.cSpd +
+            "<br>LUK: " + myParty.cComp02.cLuck +
+    
+        "</td></tr></table>"; // END <table> of Party
 
+    // Actions to take in this screen via a <form>
+    // First create the <form> and all <options> based on myParty
+    // Keep it in #pTvnParty and make sure it's +=
+    document.querySelector("#pTvnParty").innerHTML += "<p><form id='frmTvnSlctChar'>" + 
+            "<label>Choose a Party Member: </label>" +
+                "<select id='selTvnChar'>" + 
+                    "<option value='0'>&nbsp;</option>" +
+                    "<option value='cMain'   id='cMain'>" + myParty.cMain.cName + "</option>" +
+                    "<option value='cComp01' id='cComp01'>" + myParty.cComp01.cName + "</option>" +
+                    "<option value='cComp02' id='cComp02'>" + myParty.cComp02.cName + "</option>" +
+                "</select>" +
+        "</form></p>"; // END the <form> to pick a Party member
+
+    // Pay attention to changes (Selecting) a Character from the <form>
+    // .addEventListner() means Listen Form (wait for) an Event (action)
+    document.querySelector("#frmTvnSlctChar").addEventListener("change", function(){
+            // Read the Values of what we selected
+            let valSelTvnChar = document.querySelector("#selTvnChar");
+            let valSelTvnCharObj = valSelTvnChar.options[valSelTvnChar.selectedIndex];
+        
+            // After reading Who we picked, have them pick an Action (who to battle), via Conditional Statement
+            if(valSelTvnCharObj.value == 0){
+                console.log("true, we picked NOTHING");
+            }else{
+                console.log("false, we didn't pick nothing, web picked a character");
+                console.log("Which <td>", valSelTvnCharObj);
+                // NOTE: Alternate syntax to read a Stat:   myParty["cMain"].cLuck vs myParty.cMain.cLuck
+                console.log("Member Name:", myParty[valSelTvnCharObj.value].cName);
+
+                // Now start using #pTvnAction and start with =    not +=
+                document.querySelector("#pTvnAction").innerHTML = "<p>Have " + myParty[valSelTvnCharObj.value].cName + " do this:</p>" +  "<button>STR Contest</button> <button>SPD Contest</button> <button>LUK Contest</button>";
+            }; // END If..Else for Select
+        }); // END .addEventListener on the <select>
 
     // Generate Enemies
     // Enemy constructor(eType, eHp, eStr, eSpd, eMp, eWep, eClass, eStatus){
-    let tvEnemy01 = new Enemy("Goblin", 
+    let tvEnemy01 = new Enemy("Ogre", 
         fnGenArray(arrStats), fnGenArray(arrStats), fnGenArray(arrStats), fnGenArray(arrStats),
         fnGenArray(arrWeapons), fnGenArray(arrClasses), "Normal");
-    // let tvEnemy02 = new Enemy("Giant",    );
-    // let tvEnemy03 = new Enemy("Sprite",   );
+    let tvEnemy02 = new Enemy("Goblin",   
+        fnGenArray(arrStats), fnGenArray(arrStats), fnGenArray(arrStats), fnGenArray(arrStats),
+        fnGenArray(arrWeapons), fnGenArray(arrClasses), "Normal");
+    let tvEnemy03 = new Enemy("Troll",   
+        fnGenArray(arrStats), fnGenArray(arrStats), fnGenArray(arrStats), fnGenArray(arrStats),
+        fnGenArray(arrWeapons), fnGenArray(arrClasses), "Normal");
 
-    document.querySelector("#pTvnEnemy").innerHTML = "Enemies";
-    document.querySelector("#pTvnEnemy").innerHTML += "<br>" + tvEnemy01.eType;
-    document.querySelector("#pTvnEnemy").innerHTML += "<br>HP: " + tvEnemy01.eHp;
-    document.querySelector("#pTvnEnemy").innerHTML += "<br>STR: " + tvEnemy01.eStr;
-    document.querySelector("#pTvnEnemy").innerHTML += "<br>SPD: " + tvEnemy01.eSpd;
-    document.querySelector("#pTvnEnemy").innerHTML += "<br>MP: " + tvEnemy01.eMp;
-    // to access the luck generator, run the METHOD of this Object, not the Properties
-    document.querySelector("#pTvnEnemy").innerHTML += "<br>LUK: " + tvEnemy01.eLuck();
-    document.querySelector("#pTvnEnemy").innerHTML += "<br>WEP: " + tvEnemy01.eWep;
-    document.querySelector("#pTvnEnemy").innerHTML += "<br>CLS: " + tvEnemy01.eClass;
-    document.querySelector("#pTvnEnemy").innerHTML += "<br>STAT: " + tvEnemy01.eStatus;
+    document.querySelector("#pTvnEnemy").innerHTML = "<table><tr><td style='padding-right: 0.5em; border-right: 2px solid goldenrod; border-left: 2px solid goldenrod; padding-left: 0.5em;'>" +
+            tvEnemy01.eType +
+            "<br>" + tvEnemy01.eClass +
+        "</td><td style='padding-right: 0.5em; border-right: 2px solid goldenrod; padding-left: 0.5em;'>" +
+            tvEnemy02.eType +
+            "<br>" + tvEnemy02.eClass +
+        "</td><td style='padding-left: 0.5em; border-right: 2px solid goldenrod;'>" +
+            tvEnemy03.eType +
+            "<br>" + tvEnemy03.eClass +
+    "</td></tr></table>"; // END <table> of Enemies
     
 }; // END fnTavern()
+
 
 // Universal game initializer subroutine
 function fnGameInit(){
@@ -320,11 +371,10 @@ function fnGameInit(){
     // At game start, load the Array of all emails so we can properly set up #pgLoadGame screen
     let tmpGamesAll = JSON.parse(localStorage.getItem("allEmails"));
 
-    // if(!data){}     // if(data){}    // if(hiScore >= 100){}   // if(5 <= 10) {} // if(2 == 2){}
     // Decide on what to do if NO data (at first run, for example), or YES data (show saves)
     if(!tmpGamesAll){
         console.log("TRUE that we have NO saves");
-        document.querySelector("#pLGPartyMessage").innerHTML = "Hello, you are new...";
+        document.querySelector("#pLGPartyMessage").innerHTML = "Hello, you are new... Go back and click on 'Create Game'";
         document.querySelector("#spnLGPartyTotals").innerHTML = "0";
     }else{
         console.log("FALSE we do NOT have an EMPTY save slot");
@@ -335,10 +385,7 @@ function fnGameInit(){
         document.querySelector("#pLGPartySelect").innerHTML = "&nbsp;<br>";
         // Show the Saved Games (Parties) to click on each, and return to your last state (screen)
         // via Looping (a Conditional Statement), so that every party is shown on-screen and clickable
-        // for(condition?){loop};       // if(condition?){true}else{false};
-        // for(let i = 0; i < x; i++){}
         for(let i = 0; i < tmpGamesAll.length; i++){
-            // DON'T FORGET += !!!!!!!!!!!!!!!!   
             document.querySelector("#pLGPartySelect").innerHTML += 
                 "<button onclick='fnGameLoad(`" + tmpGamesAll[i] + "`);'>" + tmpGamesAll[i] + "</button><br>";
         }; //END For()
