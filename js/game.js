@@ -303,9 +303,8 @@ function fnTavern(currParty){
     
         "</td></tr></table>"; // END <table> of Party
 
-    // Actions to take in this screen via a <form>
-    // First create the <form> and all <options> based on myParty
-    // Keep it in #pTvnParty and make sure it's +=
+    // Actions to take in this screen via a <form> - populate a drop down menu with myParty members
+    // First create the <form> and all <options> based on myParty. Keep it in #pTvnParty and make sure it's +=
     document.querySelector("#pTvnParty").innerHTML += "<p><form id='frmTvnSlctChar'>" + 
             "<label>Choose a Party Member: </label>" +
                 "<select id='selTvnChar'>" + 
@@ -316,8 +315,7 @@ function fnTavern(currParty){
                 "</select>" +
         "</form></p>"; // END the <form> to pick a Party member
 
-    // Pay attention to changes (Selecting) a Character from the <form>
-    // .addEventListner() means Listen Form (wait for) an Event (action)
+    // Use .addEventListner() means Listen Form (wait for) an Event (action) - to get the selected character from the <form>
     document.querySelector("#frmTvnSlctChar").addEventListener("change", function(){
             // Read the Values of what we selected
             let valSelTvnChar = document.querySelector("#selTvnChar");
